@@ -54,3 +54,22 @@ func (a *Authenticator) VerifyIDToken(ctx context.Context, token *oauth2.Token) 
 func (a *Authenticator) GetAuthCodeURL(state string) string {
 	return a.AuthCodeURL(state)
 }
+
+func (a *Authenticator) GetProfileFromCode(ctx context.Context, code string) (map[string]interface{}, *oauth2.Token, error) {
+	// Exchange an authorization code for a token.
+	token, err := a.Exchange(ctx, code)
+	if err != nil {
+		return nil, nil, errors.New("Failed to convert an authorization code into a token.")
+	}
+
+	idToken, err := a.VerifyIDToken(ctx, token)
+	if err != nil {
+		return nil, nil, errors.New("Failed to verify ID Token.")
+	}
+
+	var profile map[string]interface{}
+	if err := idToken.Claims(&profile); err != nil {
+		return nil, nil, errors.New("Failed to claim profile from idToken")
+	}
+	return profile, token, nil
+}
