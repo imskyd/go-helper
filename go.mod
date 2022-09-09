@@ -1,4 +1,4 @@
-module go-helper
+module github.com/raven-ruiwen/go-helper
 
 go 1.17
 
