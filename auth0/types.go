@@ -7,6 +7,7 @@ type Config struct {
 	ClientId     string `mapstructure:"client_id"`
 	ClientSecret string `mapstructure:"client_secret"`
 	CallbackUrl  string `mapstructure:"callback_url"`
+	LogoutUrl    string `mapstructure:"logout_url"`
 	DbConnection string `mapstructure:"db_connection"`
 }
 
